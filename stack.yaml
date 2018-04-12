@@ -1,0 +1,8 @@
+flags: {}
+# resolver: nightly-2018-04-14
+resolver: lts-11.4
+packages:
+- .
+extra-deps:
+- parsec-numbers-0.1.0
+

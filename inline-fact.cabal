@@ -1,0 +1,44 @@
+name:                inline-fact
+version:             0.0.0.1
+homepage:            https://github.com/PLSysSec/inline-fact
+license:             MIT
+license-file:        LICENSE
+author:              Deian Stefan and the FaCT team
+maintainer:          deian@cs.ucsd.edu
+copyright:           2018 Deian Stefan and FaCT team
+category:            Security
+build-type:          Simple
+extra-source-files:  README.md
+cabal-version:       >=1.10
+
+extra-source-files:
+    README.md
+
+source-repository head
+  type:     git
+  location: https://github.com/PLSysSec/inline-fact
+
+library
+  hs-source-dirs:      src
+  exposed-modules:     Language.FaCT.Inline
+  ghc-options:         -Wall                     
+  build-depends:       base >= 4.7 && < 5,
+                       template-haskell,
+                       parsec,
+                       parsec-numbers,
+                       filepath,
+                       directory,
+                       process,
+                       unix
+  default-language:    Haskell2010
+
+executable simple-example
+  main-is: Main.hs
+  other-modules:
+  hs-source-dirs:
+      example
+  build-depends:
+      base >=4.7 && <5
+    , inline-fact
+  ghc-options: -dynamic
+  default-language: Haskell2010
