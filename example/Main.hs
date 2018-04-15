@@ -17,6 +17,6 @@ main = do
   putStrLn "hello!"
   res1 <- add 3 55
   putStrLn $ show res1
-  res2 <- sub 3 55
+  res2 <- sub 55 3
   putStrLn $ show res2
   putStrLn "bye!"

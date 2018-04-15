@@ -36,7 +36,7 @@ qDec :: String -> Q [Dec]
 qDec source = do
   runIO $ putStrLn source
   fun@(Fun name _ _ isExternal) <- runIO $ parseFaCTFun source
-  let source' = if isExternal then source' else "external " ++ source
+  let source' = if isExternal then source' else "export " ++ source
   ofile <- runIO $ compile name source'
   return $ funToDecs ofile fun
 
@@ -44,16 +44,16 @@ compile :: String -> String -> IO FilePath
 compile name source = do
   bracket (mkstemps ("/tmp/" ++ name) ".fact")
           (\(file, h) -> do hClose h
-                            -- TODO(call out to fact compiler): callProcess factCC [file] 
+                            callProcess factCC [file] 
                             -- REMOVE all but the .so file
                             removeFile file)
           $ \(file, h) -> do
            putStrLn $ "Writing to..." ++ file
            hPutStrLn h source
-           return $ replaceExtension file "so"
+           return $ replaceExtension file "fpic.so"
 
 factCC :: FilePath
-factCC = error "call out to fact compiler"
+factCC = "fact"
 
 dlopen :: FilePath -> IO L.DL
 dlopen ofile = do
@@ -171,7 +171,7 @@ arg = do
 
 fun :: Parser Fun
 fun = do
-  mextrn <- optionMaybe $ spaces >> string "external"
+  mextrn <- optionMaybe $ spaces >> string "export"
   spaces
   t <- retTy
   spaces
