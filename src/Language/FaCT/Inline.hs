@@ -44,7 +44,7 @@ compile :: String -> String -> IO FilePath
 compile name source = do
   bracket (mkstemps ("/tmp/" ++ name) ".fact")
           (\(file, h) -> do hClose h
-                            callProcess factCC [file] 
+                            callProcess factCC ["-shared", file] 
                             -- REMOVE all but the .so file
                             removeFile file)
           $ \(file, h) -> do
